@@ -5,42 +5,52 @@ export function TopBar() {
   const { searchQuery, setSearchQuery } = useStore();
 
   return (
-    <header className="h-20 border-b border-crypto-border bg-crypto-bg flex items-center justify-between px-8 sticky top-0 z-10">
-      <div className="flex-1 max-w-xl">
-        <div className="relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-crypto-muted group-focus-within:text-crypto-accent transition-colors" size={20} />
-          <input 
-            type="text" 
-            placeholder="Search crypto assets..." 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-crypto-card border border-crypto-border rounded-xl py-3 pl-12 pr-4 text-sm text-white placeholder-crypto-muted focus:outline-none focus:border-crypto-accent/50 focus:ring-1 focus:ring-crypto-accent/50 transition-all"
-          />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-            <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-medium text-crypto-muted bg-crypto-hover border border-crypto-border rounded shadow-sm">
-              ⌘K
-            </kbd>
-          </div>
+    <header className="h-20 bg-[#0B0E14] flex items-center justify-end px-8 sticky top-0 z-10 gap-6">
+      
+      {/* Search Bar */}
+      <div className="relative group w-80">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A657A] group-focus-within:text-white transition-colors" size={18} />
+        <input 
+          type="text" 
+          placeholder="Search coins, markets..." 
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full bg-[#151A27] border border-[#1E2532] rounded-xl py-2.5 pl-11 pr-12 text-[13px] text-white placeholder-[#5A657A] focus:outline-none focus:border-[#2A3441] transition-all"
+        />
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
+          <kbd className="inline-block px-2 py-1 text-[10px] font-bold text-[#5A657A] bg-[#1E2532] rounded-md">
+            ⌘K
+          </kbd>
         </div>
       </div>
 
-      <div className="flex items-center gap-4 ml-8">
-        <div className="flex items-center gap-1 cursor-pointer bg-crypto-card border border-crypto-border px-3 py-1.5 rounded-lg hover:border-crypto-accent transition-colors">
-          <span className="text-sm font-medium">USD</span>
-          <ChevronDown size={14} className="text-crypto-muted" />
-        </div>
+      {/* Currency Selector */}
+      <button className="flex items-center gap-2 bg-[#151A27] border border-[#1E2532] hover:bg-[#1E2532] transition-colors rounded-xl px-4 py-2.5">
+        <span className="text-[13px] font-semibold text-white">USD</span>
+        <ChevronDown size={14} className="text-[#5A657A]" strokeWidth={3} />
+      </button>
 
-        <button className="p-2 text-crypto-muted hover:text-white hover:bg-crypto-hover rounded-lg transition-colors">
-          <Moon size={20} />
+      {/* Action Icons */}
+      <div className="flex items-center gap-1">
+        <button className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors">
+          <Moon size={18} />
         </button>
-
-        <button className="p-2 text-crypto-muted hover:text-white hover:bg-crypto-hover rounded-lg transition-colors relative">
-          <Bell size={20} />
-          <span className="absolute top-2 right-2.5 w-2 h-2 bg-crypto-accent rounded-full border-2 border-crypto-bg"></span>
+        <button className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors relative">
+          <Bell size={18} />
+          {/* Notification Dot */}
+          <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-500 rounded-full border-2 border-[#0B0E14]"></span>
         </button>
-
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 cursor-pointer border-2 border-crypto-bg ring-1 ring-crypto-border ml-2"></div>
       </div>
+
+      {/* Profile Avatar */}
+      <button className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 p-[2px] cursor-pointer hover:opacity-90 transition-opacity ml-2">
+        <img 
+          src="https://i.pravatar.cc/100?img=33" 
+          alt="Profile" 
+          className="w-full h-full rounded-full object-cover border-2 border-[#0B0E14]"
+        />
+      </button>
+
     </header>
   );
 }
