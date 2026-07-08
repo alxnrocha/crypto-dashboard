@@ -1,5 +1,6 @@
 import { CoinTable } from "../components/dashboard/CoinTable";
 import { CoinChart } from "../components/dashboard/CoinChart";
+import { MarketHighlights } from "../components/dashboard/MarketHighlights";
 
 export function Home() {
   return (
@@ -26,9 +27,7 @@ export function Home() {
 
         {/* Right Column (Gainers, Losers, Heatmap) */}
         <div className="col-span-12 xl:col-span-4 flex flex-col gap-6">
-          <div className="bg-crypto-card border border-crypto-border rounded-xl h-[300px] animate-pulse"></div>
-          <div className="bg-crypto-card border border-crypto-border rounded-xl h-[300px] animate-pulse"></div>
-          <div className="bg-crypto-card border border-crypto-border rounded-xl h-[200px] animate-pulse"></div>
+          <MarketHighlights />
         </div>
       </div>
     </div>
