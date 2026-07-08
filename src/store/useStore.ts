@@ -4,8 +4,10 @@ import { persist } from 'zustand/middleware';
 interface StoreState {
   currency: 'USD' | 'BRL';
   favorites: string[];
+  searchQuery: string;
   setCurrency: (currency: 'USD' | 'BRL') => void;
   toggleFavorite: (coinId: string) => void;
+  setSearchQuery: (query: string) => void;
 }
 
 export const useStore = create<StoreState>()(
@@ -13,6 +15,7 @@ export const useStore = create<StoreState>()(
     (set) => ({
       currency: 'USD',
       favorites: [],
+      searchQuery: '',
       setCurrency: (currency) => set({ currency }),
       toggleFavorite: (coinId) =>
         set((state) => ({

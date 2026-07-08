@@ -1,15 +1,20 @@
 import { Search, Moon, Bell, ChevronDown } from "lucide-react";
+import { useStore } from "../../store/useStore";
 
 export function TopBar() {
+  const { searchQuery, setSearchQuery } = useStore();
+
   return (
     <header className="h-20 border-b border-crypto-border bg-crypto-bg flex items-center justify-between px-8 sticky top-0 z-10">
       <div className="flex-1 max-w-xl">
         <div className="relative group">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-crypto-muted group-focus-within:text-crypto-accent transition-colors" size={18} />
-          <input
-            type="text"
-            placeholder="Search coins, markets..."
-            className="w-full bg-crypto-card border border-crypto-border rounded-lg pl-10 pr-12 py-2.5 text-sm text-crypto-text focus:outline-none focus:border-crypto-accent transition-colors placeholder:text-crypto-muted"
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-crypto-muted group-focus-within:text-crypto-accent transition-colors" size={20} />
+          <input 
+            type="text" 
+            placeholder="Search crypto assets..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-crypto-card border border-crypto-border rounded-xl py-3 pl-12 pr-4 text-sm text-white placeholder-crypto-muted focus:outline-none focus:border-crypto-accent/50 focus:ring-1 focus:ring-crypto-accent/50 transition-all"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
             <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-medium text-crypto-muted bg-crypto-hover border border-crypto-border rounded shadow-sm">
