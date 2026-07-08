@@ -1,6 +1,7 @@
 import { CoinTable } from "../components/dashboard/CoinTable";
 import { CoinChart } from "../components/dashboard/CoinChart";
 import { MarketHighlights } from "../components/dashboard/MarketHighlights";
+import { TopCards } from "../components/dashboard/TopCards";
 
 export function Home() {
   return (
@@ -10,12 +11,7 @@ export function Home() {
         <p className="text-sm text-crypto-muted">Track the top cryptocurrencies in real-time.</p>
       </div>
 
-      {/* Top Cards Placeholder */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="bg-crypto-card border border-crypto-border rounded-xl h-24 animate-pulse"></div>
-        ))}
-      </div>
+      <TopCards />
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-6">
