@@ -2,36 +2,80 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'rec
 import { useStore } from '../../store/useStore';
 import { useState } from 'react';
 
-// Mock data for the chart since the real historical API from CoinGecko is complex without a specific coin selected
 const generateMockData = () => {
-  return Array.from({ length: 30 }).map((_, i) => ({
-    time: `Day ${i + 1}`,
-    price: 40000 + Math.random() * 5000 + (i * 200),
-  }));
+  const data = [];
+  let price = 2.2;
+  for (let i = 10; i <= 16; i++) {
+    for (let j = 0; j < 4; j++) {
+      price = price + (Math.random() - 0.45) * 0.05;
+      data.push({
+        time: `May ${i}`,
+        price: price,
+        formattedPrice: `$${price.toFixed(2)}T`,
+      });
+    }
+  }
+  return data;
 };
 
 const data = generateMockData();
 
 export function CoinChart() {
   const { currency } = useStore();
-  const [range, setRange] = useState('30D');
+  const [range, setRange] = useState('7D');
+  const [metric, setMetric] = useState('Market Cap');
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-[#151A27] border border-[#1E2532] p-3 rounded-lg shadow-xl shadow-blue-900/10">
+          <p className="text-[#808A9D] text-[11px] mb-1 font-medium">{label}, 2024</p>
+          <p className="text-[#3B82F6] font-bold text-sm">{payload[0].payload.formattedPrice}</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
-    <div className="bg-crypto-card border border-crypto-border rounded-xl p-6 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-lg font-semibold text-white">Market Trend (Bitcoin)</h2>
-          <p className="text-sm text-crypto-muted">Price history in {currency}</p>
+    <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-6 h-[400px] flex flex-col relative group">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+        <div className="flex items-center gap-4">
+          <h2 className="text-[13px] font-bold text-white">Market Chart</h2>
+          <div className="flex items-center bg-[#0B0E14] rounded-lg p-1">
+            <button
+              onClick={() => setMetric('Market Cap')}
+              className={`px-3 py-1.5 rounded-md text-[11px] font-bold transition-colors ${
+                metric === 'Market Cap' 
+                  ? 'bg-[#1E2532] text-white' 
+                  : 'text-[#5A657A] hover:text-[#808A9D]'
+              }`}
+            >
+              Market Cap
+            </button>
+            <button
+              onClick={() => setMetric('Volume')}
+              className={`px-3 py-1.5 rounded-md text-[11px] font-bold transition-colors ${
+                metric === 'Volume' 
+                  ? 'bg-[#1E2532] text-white' 
+                  : 'text-[#5A657A] hover:text-[#808A9D]'
+              }`}
+            >
+              Volume
+            </button>
+          </div>
         </div>
-        <div className="flex gap-2">
-          {['7D', '30D', '1Y'].map((r) => (
+
+        <div className="flex gap-1">
+          {['1D', '7D', '1M', '3M', '1Y', 'ALL'].map((r) => (
             <button
               key={r}
               onClick={() => setRange(r)}
-              className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
+              className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-colors ${
                 range === r 
-                  ? 'bg-crypto-accent text-white' 
-                  : 'bg-crypto-bg text-crypto-muted hover:text-white'
+                  ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/20' 
+                  : 'text-[#5A657A] hover:text-white'
               }`}
             >
               {r}
@@ -40,33 +84,43 @@ export function CoinChart() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-[300px]">
+      {/* Chart */}
+      <div className="flex-1 -mx-2 -mb-2">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-crypto-accent)" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="var(--color-crypto-accent)" stopOpacity={0}/>
+                <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.4}/>
+                <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <XAxis dataKey="time" hide />
-            <YAxis domain={['auto', 'auto']} hide />
-            <Tooltip
-              contentStyle={{ backgroundColor: 'var(--color-crypto-hover)', borderColor: 'var(--color-crypto-border)', borderRadius: '8px' }}
-              itemStyle={{ color: 'var(--color-crypto-accent)' }}
-              labelStyle={{ color: 'var(--color-crypto-muted)', marginBottom: '4px' }}
-              formatter={(value: any) => [
-                new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(value), 
-                'Price'
-              ]}
+            <XAxis 
+              dataKey="time" 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{ fill: '#5A657A', fontSize: 11, fontWeight: 500 }}
+              dy={10}
+              interval="preserveStartEnd"
+              minTickGap={30}
             />
+            <YAxis 
+              domain={['auto', 'auto']} 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{ fill: '#5A657A', fontSize: 11, fontWeight: 500 }}
+              tickFormatter={(val) => `$${val.toFixed(2)}T`}
+              dx={-10}
+              width={50}
+            />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#1E2532', strokeWidth: 1, strokeDasharray: '4 4' }} />
             <Area 
               type="monotone" 
               dataKey="price" 
-              stroke="var(--color-crypto-accent)" 
-              strokeWidth={2}
+              stroke="#3B82F6" 
+              strokeWidth={3}
               fillOpacity={1} 
               fill="url(#colorPrice)" 
+              activeDot={{ r: 6, fill: '#3B82F6', stroke: '#0B0E14', strokeWidth: 3 }}
             />
           </AreaChart>
         </ResponsiveContainer>
