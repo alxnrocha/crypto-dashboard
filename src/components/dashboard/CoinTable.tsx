@@ -4,7 +4,7 @@ import { useStore } from '../../store/useStore';
 import { TrendingUp, TrendingDown, Star } from 'lucide-react';
 
 export function CoinTable() {
-  const { currency, toggleFavorite, favorites } = useStore();
+  const { currency, toggleFavorite, favorites, searchQuery } = useStore();
   const { data: coins, isLoading, isError } = useQuery({
     queryKey: ['coins', currency],
     queryFn: () => getMarketCoins(currency),
@@ -51,6 +51,11 @@ export function CoinTable() {
     }).format(val);
   };
 
+  const filteredCoins = coins?.filter(coin => 
+    coin.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="bg-crypto-card border border-crypto-border rounded-xl overflow-hidden overflow-x-auto">
       <div className="min-w-[700px]">
@@ -63,7 +68,7 @@ export function CoinTable() {
         </div>
 
         <div className="divide-y divide-crypto-border">
-          {coins?.slice(0, 50).map((coin) => {
+          {filteredCoins?.slice(0, 50).map((coin) => {
             const isFav = favorites.includes(coin.id);
             const isPositive = coin.price_change_percentage_24h >= 0;
 
