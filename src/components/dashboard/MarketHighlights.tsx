@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMarketCoins } from '../../services/api';
 import { useStore } from '../../store/useStore';
-import { TrendingUp, TrendingDown, Flame } from 'lucide-react';
 
 export function MarketHighlights() {
   const { currency } = useStore();
@@ -12,23 +11,9 @@ export function MarketHighlights() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col gap-6">
-        {[1, 2].map((i) => (
-          <div key={i} className="bg-crypto-card border border-crypto-border rounded-xl p-6">
-            <div className="h-5 w-32 bg-crypto-border rounded animate-pulse mb-4"></div>
-            <div className="space-y-4">
-              {[1, 2, 3].map((j) => (
-                <div key={j} className="flex justify-between items-center">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 bg-crypto-border rounded-full animate-pulse"></div>
-                    <div className="h-4 w-16 bg-crypto-border rounded animate-pulse"></div>
-                  </div>
-                  <div className="h-4 w-12 bg-crypto-border rounded animate-pulse"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="flex flex-col gap-4 h-full">
+        <div className="bg-[#151A27] border border-[#1E2532] rounded-xl flex-1 animate-pulse"></div>
+        <div className="bg-[#151A27] border border-[#1E2532] rounded-xl flex-1 animate-pulse"></div>
       </div>
     );
   }
@@ -40,36 +25,43 @@ export function MarketHighlights() {
   const topLosers = sortedByChange.slice(-3).reverse();
 
   const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-      minimumFractionDigits: val < 1 ? 4 : 2,
-    }).format(val);
+    return val >= 1 
+      ? new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(val)
+      : `$${val.toFixed(6)}`;
   };
 
   const HighlightList = ({ title, items, isGainer }: { title: string, items: typeof coins, isGainer: boolean }) => (
-    <div className="bg-crypto-card border border-crypto-border rounded-xl p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Flame className={isGainer ? 'text-crypto-green' : 'text-crypto-red'} size={18} />
-        <h3 className="font-semibold text-white">{title}</h3>
+    <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-5 flex-1 flex flex-col">
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="font-bold text-white text-[13px]">{title}</h3>
+        <button className="px-3 py-1 bg-[#1E2532] hover:bg-[#2A3441] text-white text-[11px] font-bold rounded-lg transition-colors">
+          View all
+        </button>
       </div>
-      <div className="space-y-4">
-        {items.map((coin) => (
-          <div key={coin.id} className="flex justify-between items-center group cursor-pointer hover:bg-crypto-hover p-2 -mx-2 rounded-lg transition-colors">
-            <div className="flex items-center gap-3">
+      <div className="space-y-1 flex-1 flex flex-col justify-between">
+        {items.map((coin, index) => (
+          <div key={coin.id} className="flex items-center group cursor-pointer hover:bg-[#1C2333] p-2 -mx-2 rounded-xl transition-colors">
+            
+            {/* Rank Number */}
+            <span className="text-[#5A657A] text-[11px] font-bold w-4">{index + 1}</span>
+            
+            {/* Coin Info */}
+            <div className="flex items-center gap-3 flex-1 ml-2">
               <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full" />
               <div className="flex flex-col">
-                <span className="font-semibold text-white text-sm group-hover:text-crypto-accent transition-colors">{coin.name}</span>
-                <span className="text-xs text-crypto-muted uppercase">{coin.symbol}</span>
+                <span className="font-bold text-white text-[13px] group-hover:text-blue-400 transition-colors">{coin.name}</span>
+                <span className="text-[11px] font-semibold text-[#5A657A] uppercase">{coin.symbol}</span>
               </div>
             </div>
-            <div className="flex flex-col items-end">
-              <span className="text-sm font-medium text-white">{formatCurrency(coin.current_price)}</span>
-              <div className={`flex items-center gap-1 text-xs font-medium ${isGainer ? 'text-crypto-green' : 'text-crypto-red'}`}>
-                {isGainer ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-                {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+
+            {/* Price & Change */}
+            <div className="flex items-center gap-6">
+              <span className="text-[13px] font-bold text-white w-20 text-right">{formatCurrency(coin.current_price)}</span>
+              <div className={`text-[12px] font-bold w-16 text-right ${isGainer ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                {isGainer ? '+' : ''}{coin.price_change_percentage_24h.toFixed(2)}%
               </div>
             </div>
+            
           </div>
         ))}
       </div>
@@ -77,7 +69,7 @@ export function MarketHighlights() {
   );
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 h-full">
       <HighlightList title="Top Gainers" items={topGainers} isGainer={true} />
       <HighlightList title="Top Losers" items={topLosers} isGainer={false} />
     </div>
