@@ -55,7 +55,7 @@ export function CoinChart() {
               contentStyle={{ backgroundColor: 'var(--color-crypto-hover)', borderColor: 'var(--color-crypto-border)', borderRadius: '8px' }}
               itemStyle={{ color: 'var(--color-crypto-accent)' }}
               labelStyle={{ color: 'var(--color-crypto-muted)', marginBottom: '4px' }}
-              formatter={(value: number) => [
+              formatter={(value: any) => [
                 new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(value), 
                 'Price'
               ]}
