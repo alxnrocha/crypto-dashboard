@@ -1,3 +1,5 @@
+import { CoinTable } from "../components/dashboard/CoinTable";
+
 export function Home() {
   return (
     <div className="space-y-6">
@@ -17,7 +19,7 @@ export function Home() {
       <div className="grid grid-cols-12 gap-6">
         {/* Left Column (Table & Chart) */}
         <div className="col-span-12 xl:col-span-8 flex flex-col gap-6">
-          <div className="bg-crypto-card border border-crypto-border rounded-xl h-[500px] animate-pulse"></div>
+          <CoinTable />
           <div className="bg-crypto-card border border-crypto-border rounded-xl h-[300px] animate-pulse"></div>
         </div>
 
