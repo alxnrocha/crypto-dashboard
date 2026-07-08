@@ -1,4 +1,5 @@
 import { CoinTable } from "../components/dashboard/CoinTable";
+import { CoinChart } from "../components/dashboard/CoinChart";
 
 export function Home() {
   return (
@@ -19,8 +20,8 @@ export function Home() {
       <div className="grid grid-cols-12 gap-6">
         {/* Left Column (Table & Chart) */}
         <div className="col-span-12 xl:col-span-8 flex flex-col gap-6">
+          <CoinChart />
           <CoinTable />
-          <div className="bg-crypto-card border border-crypto-border rounded-xl h-[300px] animate-pulse"></div>
         </div>
 
         {/* Right Column (Gainers, Losers, Heatmap) */}
