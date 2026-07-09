@@ -8,15 +8,13 @@ import {
   LayoutGrid, 
   ListTree, 
   TrendingUp,
-  Github,
-  Twitter,
-  Disc, // Using Disc for Discord placeholder
-  Sun,
   Activity
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
+// sidebar nav
 export function Sidebar() {
+  // main routes
   const mainNav = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/" },
     { icon: Heart, label: "Watchlist", href: "/watchlist" },
@@ -25,6 +23,7 @@ export function Sidebar() {
     { icon: Newspaper, label: "News", href: "#" },
   ];
 
+  // secondary filters (todo: wire these up later)
   const marketsNav = [
     { icon: Coins, label: "Coins", href: "#" },
     { icon: LayoutGrid, label: "Exchanges", href: "#" },
@@ -96,7 +95,6 @@ export function Sidebar() {
           </ul>
         </div>
 
-        <div className="flex-1"></div>
 
         {/* Stay Updated Box */}
         <div className="mx-2 mt-4 relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#182235] to-[#0F1523] border border-[#1E293B] p-5">
@@ -107,23 +105,13 @@ export function Sidebar() {
           <p className="text-[#808A9D] text-[11px] leading-relaxed mb-4 relative z-10 font-medium">
             Enable notifications and never miss important market movements.
           </p>
-          <button className="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-lg transition-colors relative z-10">
+          <button className="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-lg transition-colors relative z-10 cursor-pointer">
             Enable Alerts
           </button>
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="h-16 border-t border-[#1E2532] flex items-center justify-between px-6">
-        <div className="flex items-center gap-4 text-[#5A657A]">
-          <a href="#" className="hover:text-white transition-colors"><Github size={18} /></a>
-          <a href="#" className="hover:text-white transition-colors"><Twitter size={18} /></a>
-          <a href="#" className="hover:text-white transition-colors"><Disc size={18} /></a>
-        </div>
-        <button className="text-[#5A657A] hover:text-white transition-colors">
-          <Sun size={18} />
-        </button>
-      </div>
+
     </aside>
   );
 }

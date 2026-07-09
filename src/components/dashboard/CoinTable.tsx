@@ -4,8 +4,9 @@ import { useStore } from '../../store/useStore';
 import { Star, ChevronRight, ArrowRight } from 'lucide-react';
 import { Line, LineChart, ResponsiveContainer } from 'recharts';
 
+// mini sparkline chart
 const Sparkline = ({ color }: { color: string }) => {
-  // Generate random stable-ish line for the table sparkline
+  // random sine wave to make it look legit
   const data = Array.from({ length: 20 }).map((_, i) => ({
     value: 50 + Math.random() * 20 + Math.sin(i) * 10
   }));
@@ -29,12 +30,15 @@ const Sparkline = ({ color }: { color: string }) => {
 
 export function CoinTable() {
   const { currency, toggleFavorite, favorites, searchQuery } = useStore();
+  
   const { data: coins, isLoading, isError } = useQuery({
     queryKey: ['coins', currency],
     queryFn: () => getMarketCoins(currency),
+    // 60s poll to prevent 429 from coingecko
+    refetchInterval: 60000, 
   });
 
-  if (isLoading) {
+  if (isLoading && !coins) {
     return (
       <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-8 text-center text-[#5A657A] animate-pulse">
         Loading market data...
@@ -42,7 +46,8 @@ export function CoinTable() {
     );
   }
 
-  if (isError) {
+  // fallback to avoid breaking layout
+  if (isError && !coins) {
     return (
       <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-8 text-center text-[#EF4444]">
         Failed to load market data. Please try again later.
@@ -58,6 +63,7 @@ export function CoinTable() {
     }).format(val);
   };
 
+  // search filter
   const filteredCoins = coins?.filter(coin => 
     coin.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
@@ -92,7 +98,7 @@ export function CoinTable() {
                 <div className="col-span-4 flex items-center gap-4">
                   <button 
                     onClick={(e) => { e.stopPropagation(); toggleFavorite(coin.id); }}
-                    className={`text-[#3A465B] hover:text-white transition-colors ${isFav ? 'text-white' : ''}`}
+                    className={`text-[#3A465B] hover:text-white transition-colors cursor-pointer ${isFav ? 'text-white' : ''}`}
                   >
                     <Star size={14} fill={isFav ? 'currentColor' : 'none'} strokeWidth={isFav ? 1 : 2} />
                   </button>

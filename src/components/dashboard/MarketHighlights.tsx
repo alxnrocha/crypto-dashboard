@@ -2,14 +2,17 @@ import { useQuery } from '@tanstack/react-query';
 import { getMarketCoins } from '../../services/api';
 import { useStore } from '../../store/useStore';
 
+// highlights panel (gainers/losers)
 export function MarketHighlights() {
   const { currency } = useStore();
-  const { data: coins, isLoading } = useQuery({
+  const { data: coins, isLoading, isError } = useQuery({
     queryKey: ['coins', currency],
     queryFn: () => getMarketCoins(currency),
+    // 60s polling
+    refetchInterval: 60000,
   });
 
-  if (isLoading) {
+  if (isLoading && !coins) {
     return (
       <div className="flex flex-col gap-4 h-full">
         <div className="bg-[#151A27] border border-[#1E2532] rounded-xl flex-1 animate-pulse"></div>
@@ -18,8 +21,18 @@ export function MarketHighlights() {
     );
   }
 
+  // fallback to avoid ui crash
+  if (isError && !coins) {
+    return (
+      <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-8 text-center text-[#EF4444]">
+        Failed to load highlights.
+      </div>
+    );
+  }
+
   if (!coins) return null;
 
+  // sort and get extremes
   const sortedByChange = [...coins].sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
   const topGainers = sortedByChange.slice(0, 3);
   const topLosers = sortedByChange.slice(-3).reverse();
@@ -38,7 +51,7 @@ export function MarketHighlights() {
           View all
         </button>
       </div>
-      <div className="space-y-1 flex-1 flex flex-col justify-between">
+      <div className="flex flex-col gap-4">
         {items.map((coin, index) => (
           <div key={coin.id} className="flex items-center group cursor-pointer hover:bg-[#1C2333] p-2 -mx-2 rounded-xl transition-colors">
             

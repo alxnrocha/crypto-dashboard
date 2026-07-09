@@ -1,7 +1,9 @@
 import { Search, Moon, Bell, ChevronDown } from "lucide-react";
 import { useStore } from "../../store/useStore";
 
+// top nav bar
 export function TopBar() {
+  // bind search to global store
   const { searchQuery, setSearchQuery } = useStore();
 
   return (
