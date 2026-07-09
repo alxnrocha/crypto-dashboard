@@ -11,9 +11,12 @@ import {
   Activity
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useStore } from "../../store/useStore";
 
 // sidebar nav
 export function Sidebar() {
+  const { isMobileMenuOpen, setMobileMenuOpen } = useStore();
+
   // main routes
   const mainNav = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/" },
@@ -32,9 +35,24 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-[260px] flex-shrink-0 border-r border-[#1E2532] bg-[#0B0E14] flex flex-col h-screen sticky top-0">
-      {/* Logo */}
-      <div className="h-20 flex items-center px-6">
+    <>
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        fixed inset-y-0 left-0 z-50 w-[260px] flex-shrink-0 border-r border-[#1E2532] bg-[#0B0E14] flex flex-col h-screen
+        transform transition-transform duration-300 ease-in-out
+        lg:static lg:translate-x-0
+        ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+      `}>
+        {/* Logo */}
+        <div className="h-20 flex items-center px-6">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
             <Activity size={18} className="text-white" />
@@ -113,5 +131,6 @@ export function Sidebar() {
 
 
     </aside>
+    </>
   );
 }

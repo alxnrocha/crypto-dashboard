@@ -9,6 +9,8 @@ interface AppState {
   toggleFavorite: (coinId: string) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  isMobileMenuOpen: boolean;
+  setMobileMenuOpen: (isOpen: boolean) => void;
 }
 
 // store with localstorage persistence
@@ -27,6 +29,8 @@ export const useStore = create<AppState>()(
         })),
       searchQuery: '',
       setSearchQuery: (query) => set({ searchQuery: query }),
+      isMobileMenuOpen: false,
+      setMobileMenuOpen: (isOpen) => set({ isMobileMenuOpen: isOpen }),
     }),
     {
       name: 'crypto-dashboard-storage',

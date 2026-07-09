@@ -1,16 +1,24 @@
-import { Search, Moon, Bell, ChevronDown } from "lucide-react";
+import { Search, Moon, Bell, ChevronDown, Menu } from "lucide-react";
 import { useStore } from "../../store/useStore";
 
 // top nav bar
 export function TopBar() {
   // bind search to global store
-  const { searchQuery, setSearchQuery } = useStore();
+  const { searchQuery, setSearchQuery, setMobileMenuOpen } = useStore();
 
   return (
-    <header className="h-20 bg-[#0B0E14] flex items-center justify-end px-8 sticky top-0 z-10 gap-6">
+    <header className="h-20 bg-[#0B0E14] flex items-center justify-between lg:justify-end px-4 lg:px-8 sticky top-0 z-10 gap-4 lg:gap-6">
       
+      {/* Mobile Menu Button */}
+      <button 
+        onClick={() => setMobileMenuOpen(true)}
+        className="lg:hidden p-2 text-[#5A657A] hover:text-white hover:bg-[#151A27] rounded-xl transition-colors"
+      >
+        <Menu size={24} />
+      </button>
+
       {/* Search Bar */}
-      <div className="relative group w-80">
+      <div className="relative group flex-1 lg:w-80 lg:flex-none">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A657A] group-focus-within:text-white transition-colors" size={18} />
         <input 
           type="text" 
@@ -27,7 +35,7 @@ export function TopBar() {
       </div>
 
       {/* Currency Selector */}
-      <button className="flex items-center gap-2 bg-[#151A27] border border-[#1E2532] hover:bg-[#1E2532] transition-colors rounded-xl px-4 py-2.5">
+      <button className="hidden sm:flex items-center gap-2 bg-[#151A27] border border-[#1E2532] hover:bg-[#1E2532] transition-colors rounded-xl px-4 py-2.5">
         <span className="text-[13px] font-semibold text-white">USD</span>
         <ChevronDown size={14} className="text-[#5A657A]" strokeWidth={3} />
       </button>
