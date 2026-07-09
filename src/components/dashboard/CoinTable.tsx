@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMarketCoins } from '../../services/api';
 import { useStore } from '../../store/useStore';
-import { Star, ChevronRight, ArrowRight } from 'lucide-react';
+import { Star, ChevronRight } from 'lucide-react';
 import { Line, LineChart, ResponsiveContainer } from 'recharts';
+import { useState } from 'react';
 
 // mini sparkline chart
 const Sparkline = ({ color }: { color: string }) => {
@@ -30,6 +31,8 @@ const Sparkline = ({ color }: { color: string }) => {
 
 export function CoinTable() {
   const { currency, toggleFavorite, favorites, searchQuery } = useStore();
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 10;
   
   const { data: coins, isLoading, isError } = useQuery({
     queryKey: ['coins', currency],
@@ -69,6 +72,9 @@ export function CoinTable() {
     coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const paginatedCoins = filteredCoins?.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const totalPages = filteredCoins ? Math.ceil(filteredCoins.length / itemsPerPage) : 0;
+
   return (
     <div className="bg-[#151A27] border border-[#1E2532] rounded-xl overflow-hidden overflow-x-auto flex flex-col">
       <div className="min-w-[800px] flex-1">
@@ -87,7 +93,7 @@ export function CoinTable() {
 
         {/* Table Body */}
         <div className="divide-y divide-[#1E2532]">
-          {filteredCoins?.slice(0, 10).map((coin) => {
+          {paginatedCoins?.map((coin) => {
             const isFav = favorites.includes(coin.id);
             const isPositive = coin.price_change_percentage_24h >= 0;
 
@@ -98,6 +104,7 @@ export function CoinTable() {
                 <div className="col-span-4 flex items-center gap-4">
                   <button 
                     onClick={(e) => { e.stopPropagation(); toggleFavorite(coin.id); }}
+                    aria-label={isFav ? "Remover de favoritos" : "Añadir a favoritos"}
                     className={`text-[#3A465B] hover:text-white transition-colors cursor-pointer ${isFav ? 'text-white' : ''}`}
                   >
                     <Star size={14} fill={isFav ? 'currentColor' : 'none'} strokeWidth={isFav ? 1 : 2} />
@@ -138,10 +145,26 @@ export function CoinTable() {
         </div>
       </div>
 
-      {/* Footer Button */}
-      <button className="w-full py-4 border-t border-[#1E2532] text-[13px] font-bold text-[#808A9D] hover:text-white hover:bg-[#1C2333] transition-colors flex items-center justify-center gap-2">
-        View all coins <ArrowRight size={14} />
-      </button>
+      {/* Footer Pagination */}
+      <div className="w-full py-4 border-t border-[#1E2532] flex items-center justify-between px-6">
+        <button 
+          onClick={() => setPage(p => Math.max(1, p - 1))}
+          disabled={page === 1}
+          className="text-[13px] font-bold text-[#808A9D] hover:text-white transition-colors disabled:opacity-50 cursor-pointer"
+        >
+          Previous
+        </button>
+        <span className="text-[13px] text-[#5A657A] font-semibold">
+          Page {page} of {totalPages || 1}
+        </span>
+        <button 
+          onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+          disabled={page === totalPages || totalPages === 0}
+          className="text-[13px] font-bold text-[#808A9D] hover:text-white transition-colors disabled:opacity-50 cursor-pointer"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
