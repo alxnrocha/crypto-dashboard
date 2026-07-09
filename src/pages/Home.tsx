@@ -5,6 +5,7 @@ import { TopCards } from "../components/dashboard/TopCards";
 import { MarketHeatmap } from "../components/dashboard/MarketHeatmap";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { ErrorBoundary } from "../components/ui/ErrorBoundary";
 
 // main dashboard
 export function Home() {
@@ -44,15 +45,23 @@ export function Home() {
       <div className="grid grid-cols-12 gap-6">
         {/* Left Column (Table & Chart) */}
         <div className="col-span-12 xl:col-span-8 flex flex-col gap-6">
-          <CoinChart />
-          <CoinTable />
+          <ErrorBoundary>
+            <CoinChart />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <CoinTable />
+          </ErrorBoundary>
         </div>
 
         {/* Right Column (Gainers, Losers, Heatmap) */}
         <div className="col-span-12 xl:col-span-4 flex flex-col gap-6">
-          <MarketHighlights />
+          <ErrorBoundary>
+            <MarketHighlights />
+          </ErrorBoundary>
           <div className="h-[280px]">
-            <MarketHeatmap />
+            <ErrorBoundary>
+              <MarketHeatmap />
+            </ErrorBoundary>
           </div>
         </div>
       </div>

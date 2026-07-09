@@ -12,6 +12,7 @@ export function TopBar() {
       {/* Mobile Menu Button */}
       <button 
         onClick={() => setMobileMenuOpen(true)}
+        aria-label="Abrir menú"
         className="lg:hidden p-2 text-[#5A657A] hover:text-white hover:bg-[#151A27] rounded-xl transition-colors"
       >
         <Menu size={24} />
@@ -42,10 +43,10 @@ export function TopBar() {
 
       {/* Action Icons */}
       <div className="flex items-center gap-1">
-        <button className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors">
+        <button aria-label="Cambiar tema" className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors">
           <Moon size={18} />
         </button>
-        <button className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors relative">
+        <button aria-label="Notificaciones" className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors relative">
           <Bell size={18} />
           {/* Notification Dot */}
           <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-500 rounded-full border-2 border-[#0B0E14]"></span>
@@ -53,7 +54,7 @@ export function TopBar() {
       </div>
 
       {/* Profile Avatar */}
-      <button className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 p-[2px] cursor-pointer hover:opacity-90 transition-opacity ml-2">
+      <button aria-label="Perfil de usuario" className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 p-[2px] cursor-pointer hover:opacity-90 transition-opacity ml-2">
         <img 
           src="https://i.pravatar.cc/100?img=33" 
           alt="Profile" 

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMarketCoins } from '../../services/api';
 import { useStore } from '../../store/useStore';
+import { Card } from '../ui/Card';
 
 // highlights panel (gainers/losers)
 export function MarketHighlights() {
@@ -44,7 +45,7 @@ export function MarketHighlights() {
   };
 
   const HighlightList = ({ title, items, isGainer }: { title: string, items: typeof coins, isGainer: boolean }) => (
-    <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-5 flex-1 flex flex-col">
+    <Card className="flex-1 flex flex-col p-5">
       <div className="flex items-center justify-between mb-5">
         <h3 className="font-bold text-white text-[13px]">{title}</h3>
         <button className="px-3 py-1 bg-[#1E2532] hover:bg-[#2A3441] text-white text-[11px] font-bold rounded-lg transition-colors">
@@ -78,7 +79,7 @@ export function MarketHighlights() {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 
   return (

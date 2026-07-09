@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useStore } from "../../store/useStore";
+import { Button } from "../ui/Button";
 
 // sidebar nav
 export function Sidebar() {
@@ -123,9 +124,9 @@ export function Sidebar() {
           <p className="text-[#808A9D] text-[11px] leading-relaxed mb-4 relative z-10 font-medium">
             Enable notifications and never miss important market movements.
           </p>
-          <button className="w-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-lg transition-colors relative z-10 cursor-pointer">
+          <Button variant="primary" className="w-full text-xs font-bold py-2.5 rounded-lg relative z-10">
             Enable Alerts
-          </button>
+          </Button>
         </div>
       </div>
 

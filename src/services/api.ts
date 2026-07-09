@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // default axios instance
 const api = axios.create({
-  baseURL: 'https://api.coingecko.com/api/v3',
+  baseURL: import.meta.env.VITE_COINGECKO_API_URL,
   timeout: 10000,
 });
 
