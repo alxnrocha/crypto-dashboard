@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// global app state
 interface AppState {
   currency: 'USD' | 'BRL';
   setCurrency: (currency: 'USD' | 'BRL') => void;
@@ -13,7 +12,6 @@ interface AppState {
   setMobileMenuOpen: (isOpen: boolean) => void;
 }
 
-// store with localstorage persistence
 export const useStore = create<AppState>()(
   persist(
     (set) => ({
@@ -22,7 +20,6 @@ export const useStore = create<AppState>()(
       favorites: [],
       toggleFavorite: (coinId) =>
         set((state) => ({
-          // toggle logic
           favorites: state.favorites.includes(coinId)
             ? state.favorites.filter((id) => id !== coinId)
             : [...state.favorites, coinId],

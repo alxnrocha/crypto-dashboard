@@ -2,19 +2,14 @@ import { Line, LineChart, ResponsiveContainer } from 'recharts';
 import { useQuery } from '@tanstack/react-query';
 import { getMarketCoins } from '../../services/api';
 import { useStore } from '../../store/useStore';
+import { mockSparklineGreen, mockSparklineRed } from '../../mocks/cryptoData';
 
-// dummy data for the top cards sparklines
-const mockSparklineRed = Array.from({ length: 15 }).map(() => ({ value: Math.random() * 100 }));
-const mockSparklineGreen = Array.from({ length: 15 }).map(() => ({ value: Math.random() * 100 + 50 }));
-
-// simple svg gauge
 const Gauge = ({ value }: { value: number }) => {
   const cx = 50;
   const cy = 50;
   const r = 40;
   const strokeWidth = 8;
   const circumference = 2 * Math.PI * r;
-  // calc stroke offset for the arc
   const offset = circumference - (value / 100) * (circumference / 2);
 
   return (
@@ -51,7 +46,6 @@ const Gauge = ({ value }: { value: number }) => {
   );
 };
 
-// top row stat cards
 export function TopCards() {
   const { currency } = useStore();
   const { data: coins } = useQuery({
@@ -60,20 +54,16 @@ export function TopCards() {
     staleTime: Infinity,
   });
 
-  // compute global stats from the top 100 array so we don't need a separate api call
   const totalMarketCap = coins?.reduce((acc, coin) => acc + coin.market_cap, 0) || 2450000000000;
   const totalVolume = coins?.reduce((acc, coin) => acc + coin.total_volume, 0) || 89570000000;
   const btcCoin = coins?.find(c => c.symbol.toLowerCase() === 'btc');
   const btcDominance = btcCoin ? (btcCoin.market_cap / totalMarketCap) * 100 : 52.38;
 
-  // Formatters
   const formatTrillion = (val: number) => `$${(val / 1e12).toFixed(2)}T`;
   const formatBillion = (val: number) => `$${(val / 1e9).toFixed(2)}B`;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      
-      {/* Total Market Cap */}
       <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-4 relative group">
         <h3 className="text-[11px] font-bold text-[#5A657A] uppercase tracking-wider mb-2">Total Market Cap</h3>
         <div className="flex items-end justify-between">
@@ -91,7 +81,6 @@ export function TopCards() {
         </div>
       </div>
 
-      {/* 24h Volume */}
       <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-4 relative group">
         <h3 className="text-[11px] font-bold text-[#5A657A] uppercase tracking-wider mb-2">24h Volume</h3>
         <div className="flex items-end justify-between">
@@ -109,7 +98,6 @@ export function TopCards() {
         </div>
       </div>
 
-      {/* BTC Dominance */}
       <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-4 relative group">
         <h3 className="text-[11px] font-bold text-[#5A657A] uppercase tracking-wider mb-2">BTC Dominance</h3>
         <div className="flex items-end justify-between">
@@ -127,7 +115,6 @@ export function TopCards() {
         </div>
       </div>
 
-      {/* Fear & Greed */}
       <div className="bg-[#151A27] border border-[#1E2532] rounded-xl p-4 relative group">
         <h3 className="text-[11px] font-bold text-[#5A657A] uppercase tracking-wider mb-2">Fear & Greed Index</h3>
         <div className="flex items-center justify-between mt-2">

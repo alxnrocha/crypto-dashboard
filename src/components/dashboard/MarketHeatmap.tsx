@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getMarketCoins } from '../../services/api';
 import { useStore } from '../../store/useStore';
 
-// individual block for the heatmap grid
 const HeatmapBlock = ({ 
   symbol, 
   change, 
@@ -12,7 +11,6 @@ const HeatmapBlock = ({
   change: number, 
   className: string 
 }) => {
-  // pick bg color based on how hard it dumped or pumped
   const getBgColor = (val: number) => {
     const absVal = Math.abs(val);
     if (val >= 0) {
@@ -38,7 +36,6 @@ const HeatmapBlock = ({
   );
 };
 
-// visual heatmap
 export function MarketHeatmap() {
   const { currency } = useStore();
   const { data: coins } = useQuery({
@@ -64,21 +61,17 @@ export function MarketHeatmap() {
       </div>
       
       <div className="flex-1 grid grid-cols-4 grid-rows-3 gap-1 overflow-hidden rounded-md">
-        {/* Row 1 & 2 Left - BTC */}
         <HeatmapBlock symbol="BTC" change={getCoinData('btc', 0)} className="col-span-2 row-span-2" />
         
-        {/* Row 1 Right */}
         <HeatmapBlock symbol="ETH" change={getCoinData('eth', 0)} className="col-span-1 row-span-1" />
         <HeatmapBlock symbol="BNB" change={getCoinData('bnb', 0)} className="col-span-1 row-span-1" />
         
-        {/* Row 2 Right */}
         <div className="col-span-2 grid grid-cols-3 gap-1">
           <HeatmapBlock symbol="SOL" change={getCoinData('sol', 0)} className="col-span-1" />
           <HeatmapBlock symbol="XRP" change={getCoinData('xrp', 0)} className="col-span-1" />
           <HeatmapBlock symbol="USDT" change={getCoinData('usdt', 0)} className="col-span-1" />
         </div>
         
-        {/* Row 3 */}
         <HeatmapBlock symbol="USDC" change={getCoinData('usdc', 0)} className="col-span-1" />
         <HeatmapBlock symbol="TRX" change={getCoinData('trx', 0)} className="col-span-1" />
         <HeatmapBlock symbol="DOGE" change={getCoinData('doge', 0)} className="col-span-1" />

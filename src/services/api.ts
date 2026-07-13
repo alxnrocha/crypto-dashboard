@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-// default axios instance
 const api = axios.create({
   baseURL: import.meta.env.VITE_COINGECKO_API_URL,
   timeout: 10000,
 });
 
-// coingecko payload type
 export interface CoinMarketData {
   id: string;
   symbol: string;
@@ -25,9 +23,7 @@ export interface CoinMarketData {
   };
 }
 
-// get top 100 coins
 export const getMarketCoins = async (currency: 'USD' | 'BRL'): Promise<CoinMarketData[]> => {
-  // get markets with 7d sparkline
   const response = await api.get('/coins/markets', {
     params: {
       vs_currency: currency.toLowerCase(),
@@ -41,7 +37,6 @@ export const getMarketCoins = async (currency: 'USD' | 'BRL'): Promise<CoinMarke
   return response.data;
 };
 
-// get single coin details
 export const getCoinDetail = async (id: string) => {
   // disable heavy fields to speed up response
   const response = await api.get(`/coins/${id}`, {
