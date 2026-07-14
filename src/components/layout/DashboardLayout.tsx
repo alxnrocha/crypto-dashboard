@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
-
-// wrapper layout
 export function DashboardLayout() {
   return (
     <div className="flex min-h-screen bg-[#0B0E14] text-white font-sans selection:bg-blue-600/30 selection:text-white">

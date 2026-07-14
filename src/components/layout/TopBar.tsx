@@ -1,16 +1,12 @@
 import { Search, Moon, Bell, ChevronDown, Menu } from "lucide-react";
 import { useStore } from "../../store/useStore";
-
-// top nav bar
 export function TopBar() {
-  // bind search to global store
   const { searchQuery, setSearchQuery, setMobileMenuOpen } = useStore();
 
   return (
     <header className="h-20 bg-[#0B0E14] flex items-center justify-between lg:justify-end px-4 lg:px-8 sticky top-0 z-10 gap-4 lg:gap-6">
-      
       {/* Mobile Menu Button */}
-      <button 
+      <button
         onClick={() => setMobileMenuOpen(true)}
         aria-label="Abrir menú"
         className="lg:hidden p-2 text-[#5A657A] hover:text-white hover:bg-[#151A27] rounded-xl transition-colors"
@@ -20,10 +16,13 @@ export function TopBar() {
 
       {/* Search Bar */}
       <div className="relative group flex-1 lg:w-80 lg:flex-none">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A657A] group-focus-within:text-white transition-colors" size={18} />
-        <input 
-          type="text" 
-          placeholder="Search coins, markets..." 
+        <Search
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5A657A] group-focus-within:text-white transition-colors"
+          size={18}
+        />
+        <input
+          type="text"
+          placeholder="Search coins, markets..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full bg-[#151A27] border border-[#1E2532] rounded-xl py-2.5 pl-11 pr-12 text-[13px] text-white placeholder-[#5A657A] focus:outline-none focus:border-[#2A3441] transition-all"
@@ -43,10 +42,16 @@ export function TopBar() {
 
       {/* Action Icons */}
       <div className="flex items-center gap-1">
-        <button aria-label="Cambiar tema" className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors">
+        <button
+          aria-label="Cambiar tema"
+          className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors"
+        >
           <Moon size={18} />
         </button>
-        <button aria-label="Notificaciones" className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors relative">
+        <button
+          aria-label="Notificaciones"
+          className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A657A] hover:bg-[#151A27] hover:text-white transition-colors relative"
+        >
           <Bell size={18} />
           {/* Notification Dot */}
           <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-500 rounded-full border-2 border-[#0B0E14]"></span>
@@ -54,14 +59,16 @@ export function TopBar() {
       </div>
 
       {/* Profile Avatar */}
-      <button aria-label="Perfil de usuario" className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 p-[2px] cursor-pointer hover:opacity-90 transition-opacity ml-2">
-        <img 
-          src="https://i.pravatar.cc/100?img=33" 
-          alt="Profile" 
+      <button
+        aria-label="Perfil de usuario"
+        className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 p-[2px] cursor-pointer hover:opacity-90 transition-opacity ml-2"
+      >
+        <img
+          src="https://i.pravatar.cc/100?img=33"
+          alt="Profile"
           className="w-full h-full rounded-full object-cover border-2 border-[#0B0E14]"
         />
       </button>
-
     </header>
   );
 }

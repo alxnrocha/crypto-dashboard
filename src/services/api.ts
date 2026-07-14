@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_COINGECKO_API_URL,
@@ -23,22 +23,23 @@ export interface CoinMarketData {
   };
 }
 
-export const getMarketCoins = async (currency: 'USD' | 'BRL'): Promise<CoinMarketData[]> => {
-  const response = await api.get('/coins/markets', {
+export const getMarketCoins = async (
+  currency: "USD" | "BRL",
+): Promise<CoinMarketData[]> => {
+  const response = await api.get("/coins/markets", {
     params: {
       vs_currency: currency.toLowerCase(),
-      order: 'market_cap_desc',
+      order: "market_cap_desc",
       per_page: 100,
       page: 1,
       sparkline: true,
-      price_change_percentage: '24h',
+      price_change_percentage: "24h",
     },
   });
   return response.data;
 };
 
 export const getCoinDetail = async (id: string) => {
-  // disable heavy fields to speed up response
   const response = await api.get(`/coins/${id}`, {
     params: {
       localization: false,

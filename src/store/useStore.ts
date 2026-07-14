@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface AppState {
-  currency: 'USD' | 'BRL';
-  setCurrency: (currency: 'USD' | 'BRL') => void;
+  currency: "USD" | "BRL";
+  setCurrency: (currency: "USD" | "BRL") => void;
   favorites: string[];
   toggleFavorite: (coinId: string) => void;
   searchQuery: string;
@@ -15,7 +15,7 @@ interface AppState {
 export const useStore = create<AppState>()(
   persist(
     (set) => ({
-      currency: 'USD',
+      currency: "USD",
       setCurrency: (currency) => set({ currency }),
       favorites: [],
       toggleFavorite: (coinId) =>
@@ -24,13 +24,13 @@ export const useStore = create<AppState>()(
             ? state.favorites.filter((id) => id !== coinId)
             : [...state.favorites, coinId],
         })),
-      searchQuery: '',
+      searchQuery: "",
       setSearchQuery: (query) => set({ searchQuery: query }),
       isMobileMenuOpen: false,
       setMobileMenuOpen: (isOpen) => set({ isMobileMenuOpen: isOpen }),
     }),
     {
-      name: 'crypto-dashboard-storage',
-    }
-  )
+      name: "crypto-dashboard-storage",
+    },
+  ),
 );

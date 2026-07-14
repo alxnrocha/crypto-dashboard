@@ -1,9 +1,7 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { DashboardLayout } from './components/layout/DashboardLayout';
-import { Home } from './pages/Home';
-import { Watchlist } from './pages/Watchlist';
-
-// Main app entry point
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { DashboardLayout } from "./components/layout/DashboardLayout";
+import { Home } from "./pages/Home";
+import { Watchlist } from "./pages/Watchlist";
 function App() {
   return (
     <BrowserRouter>
