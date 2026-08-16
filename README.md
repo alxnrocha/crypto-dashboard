@@ -30,9 +30,6 @@
 ```text
 07-crypto-dashboard/
 ├── .github/workflows/ci.yml       # Pipeline de CI y Deploy automático en Pages
-├── screenshots/                   # Capturas de pantalla reales
-│   ├── desktop.png
-│   └── mobile.png
 ├── src/
 │   ├── components/
 │   │   ├── dashboard/             # CoinChart, CoinTable, MarketHeatmap y TopCards
