@@ -14,18 +14,6 @@
 
 ---
 
-## 📸 Vistas Reales del Sistema
-
-### 1. Vista Principal (Desktop)
-
-![Vista desktop de CryptoFlow Dashboard](./screenshots/desktop.png)
-
-### 2. Experiencia Responsive (Móvil)
-
-![Vista mobile de CryptoFlow Dashboard](./screenshots/mobile.png)
-
----
-
 ## ✨ Características Principales
 
 ### 🚀 Experiencia de Usuario & Frontend
