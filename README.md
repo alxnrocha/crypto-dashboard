@@ -15,18 +15,25 @@
 
 ---
 
-## ✨ Características Principales
+## 🌟 Visión General & Propuesta de Valor
 
-### 🚀 Experiencia de Usuario & Frontend
-- **Integración con CoinGecko API:** Consumo de datos reales del top 100 de criptoactivos con fallback offline inmediato.
-- **Mitigación Inteligente de Rate-Limit:** Cacheo agresivo con TanStack Query y polling controlado cada 60s para evitar errores HTTP 429.
-- **Motor de Fluctuación en Tiempo Real:** Algoritmo microscópico que simula transacciones de alta frecuencia manteniendo la interfaz viva.
-- **Gráficos Financieros Interactivos:** Visualización de tendencias históricas de precios con Recharts y rangos temporales ajustables (24h, 7d, 30d, 1y).
-- **Watchlist Persistente con Zustand:** Gestión de estado global ligera para almacenar y sincronizar monedas favoritas en el navegador.
+**CryptoFlow** es un terminal bursátil web diseñado para operadores e inversores en activos digitales.
+
+Proporciona cotizaciones en tiempo real consumidas de la API oficial de CoinGecko, visualización de tendencias con gráficos interactivos Recharts, mapa de calor de volatilidad, mitigación de rate-limits y lista de favoritos persistente mediante Zustand.
 
 ---
 
-## 🏛️ Estructura del Proyecto
+## ✨ Características Principales
+
+- **Integración con CoinGecko API:** Consumo de datos de mercado del top 100 de criptoactivos con fallback offline inmediato.
+- **Mitigación Inteligente de Rate-Limit:** Cacheo optimizado y polling controlado para evitar errores de cuota.
+- **Motor de Fluctuación en Tiempo Real:** Algoritmo que simula micro-movimientos de mercado manteniendo la interfaz reactiva.
+- **Gráficos Financieros Interactivos:** Visualización de tendencias con Recharts y rangos temporales ajustables (24h, 7d, 30d, 1y).
+- **Watchlist Persistente con Zustand:** Gestión de favoritos almacenada en el navegador.
+
+---
+
+## 🏛️ Arquitectura del Proyecto
 
 ```text
 07-crypto-dashboard/
@@ -38,28 +45,51 @@
 │   ├── types/                     # Tipos TypeScript
 │   ├── App.tsx                    # Componente raíz
 │   └── main.tsx                   # Punto de entrada
+├── LICENSE
 ├── package.json
 └── vite.config.ts
 ```
 
 ---
 
-## ⚡ Guía de Inicio Rápido
+## 🚀 Instalación y Puesta en Marcha
 
-### 1. Clonar el Repositorio
-```bash
-git clone https://github.com/alxnrocha/crypto-dashboard.git
-cd crypto-dashboard
-```
+### Prerrequisitos
+- Node.js `>= 20.0.0`
+- npm `>= 10.0.0`
 
-### 2. Instalar Dependencias y Ejecutar
-```bash
-npm install
-npm run dev
-```
+### Pasos
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/alxnrocha/crypto-dashboard.git
+   cd crypto-dashboard
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Ejecutar en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Compilar para producción:**
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 🛡️ Calidad de Código & Testing
+
+- **Seguridad de Tipos:** TypeScript estricto para datos de mercado y respuestas de la API.
+- **Rendimiento:** Gráficos optimizados y debounce en búsquedas.
 
 ---
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulte el archivo [LICENSE](./LICENSE) para más detalles.
+Este proyecto se encuentra bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
