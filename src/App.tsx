@@ -1,3 +1,4 @@
+import { ProjectBadge } from './components/ProjectBadge';
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { DashboardLayout } from "./components/layout/DashboardLayout";
 import { Home } from "./pages/Home";
